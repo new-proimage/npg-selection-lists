@@ -1,0 +1,33 @@
+.list-to-list div {
+  float: left;
+}
+.list-to-list div h3 {
+  font-size: 14px;
+  color: cornflowerblue;
+  font-weight: normal;
+}
+
+.list-to-list div ul {
+  border: 1px solid lightgrey;
+  padding: 5px 0 5px 0;
+  margin: 5px;
+  text-align: center;
+  height: 300px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px grey;
+  width: 200px;
+}
+
+.list-to-list div ul li {
+  list-style-type: none;
+  padding: 2px;
+}
+
+.list-to-list div ul .selected {
+  background-color: cornflowerblue;
+  color: white;
+}
+
+.list-to-list div:last-child {
+  margin-left: 10px;
+}
