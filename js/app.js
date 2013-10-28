@@ -19,6 +19,8 @@
 
     selected: null,
 
+    classNames: ['set-to-list'],
+
     init: function(){
       this._super();
       // make massage to the data to remove chosen items
