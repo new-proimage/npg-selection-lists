@@ -15,7 +15,7 @@
     }
   });
 
-  NPG.ListToListComponent = Ember.Component.extend({
+  NPG.SetToListComponent = Ember.Component.extend({
 
     selected: null,
 

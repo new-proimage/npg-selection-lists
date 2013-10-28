@@ -40,7 +40,7 @@ The constructor can accept the following parameters:
 
 Example:
 
-		{{list-to-list
+		{{set-to-list
 	        availableItemsTitle='Column A:'
 	        chosenItemsTitle='Column B'
 	        availableItems=SNB.allItems
