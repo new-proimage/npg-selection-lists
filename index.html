@@ -14,7 +14,7 @@
         availableItems=NPG.allItems
         chosenItems=NPG.chosenItems
         chosenItemChanged="chosenItemChanged"
-        rowRender='<img src="http://icons.iconarchive.com/icons/aha-soft/people/16/engineer-icon.png" /> {{view.content}}'
+        rowRender='<img src="http://icons.iconarchive.com/icons/aha-soft/people/16/engineer-icon.png" /> {{view.content.val}}'
     }}
 
 </script>
@@ -22,11 +22,11 @@
 <script type="text/x-handlebars" id="components/set-to-list">
     <div>
       <h3>{{availableItemsTitle}}</h3>
-      {{view PanelView content=availableItems panel="availableItems"}}
+      {{view PanelView content=columnA panel="columnA"}}
     </div>
     <div>
       <h3>{{chosenItemsTitle}}</h3>
-      {{view PanelView content=chosenItems panel="chosenItems"}}
+      {{view PanelView content=columnB panel="columnB"}}
     </div>
 </script>
 

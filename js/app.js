@@ -2,14 +2,44 @@
 
   'use strict';
   window.NPG = Ember.Application.create({
-    allItems: ['apples', 'oranges', 'peaches', 'strawberries', 'plums'],
-    chosenItems: ['strawberries', 'apples']
+    allItems: [
+      {
+        index: 1,
+        val: 'apples'
+      },
+      {
+        index: 2,
+        val: 'oranges'
+      },
+      {
+        index: 3,
+        val: 'peaches'
+      },
+      {
+        index: 4,
+        val: 'strawberries'
+      },
+      {
+        index: 5,
+        val: 'plums'
+      }
+    ],
+    chosenItems: [
+      {
+        index: 1,
+        val: 'apples'
+      },
+      {
+        index: 2,
+        val: 'oranges'
+      }
+    ]
   });
 
   // Make override for the sake of hosting controller demonstration
   NPG.ApplicationController = Ember.Controller.extend({
     actions: {
-      chosenItemChanged: function(selected) {
+      chosenItemChanged: function(selected, all) {
         console.log('swapping occurred');
       }
     }
@@ -21,23 +51,22 @@
 
     classNames: ['set-to-list'],
 
-    init: function(){
-      this._super();
-      // make massage to the data to remove chosen items
-      // from all available in order prepare data source for
-      // column A
-      var chosenItems = this.get('chosenItems'),
-          availableItems = this.get('availableItems'),
-          i = 0,
-          leni = chosenItems.length,
-          index;
-      for (i; i < leni; i +=1) {
-        index = availableItems.indexOf(chosenItems[i]);
-        if (index > -1) {
-          availableItems.splice(index, 1);
+    columnBBinding: 'chosenItems',
+
+    columnA: function() {
+      var columnB = this.get('columnB'),
+        availableItems = this.get('availableItems');
+
+      return availableItems.filter(function (available) {
+        var isAvailable = columnB.find(function (item) {
+          return JSON.stringify(item) === JSON.stringify(available);
+        }, available);
+        if (!isAvailable) {
+          return available;
         }
-      }
-    },
+      });
+
+    }.property('availableItems.@each'),
 
     /**
      * Implements swap of the element from
@@ -52,7 +81,7 @@
           item = targetColumn[index];
       destColumn.pushObject(item);
       targetColumn.removeObject(item);
-      this.sendAction('chosenItemChanged', this.get('chosenItems'));
+      this.sendAction('chosenItemChanged', this.get('chosenItems'), this.get('availableItems'));
     },
 
     /**
@@ -72,6 +101,7 @@
         return this._super();
       },
       tagName: 'ul',
+
       dragOver: function (ev) {
         ev.preventDefault()
       },
