@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Set To List Component</title>
+  <link rel="stylesheet" href="css/components.css"/>
+</head>
+<body>
+
+<script type="text/x-handlebars" id="application">
+
+    {{set-to-list
+        availableItemsTitle="Stock"
+        chosenItemsTitle="Store"
+        availableItems=NPG.allItems
+        chosenItems=NPG.chosenItems
+        chosenItemChanged="chosenItemChanged"
+        rowRender='<img src="http://icons.iconarchive.com/icons/aha-soft/people/16/engineer-icon.png" /> {{view.content.val}}'
+    }}
+
+</script>
+
+<script type="text/x-handlebars" id="components/set-to-list">
+    <div>
+      <h3>{{availableItemsTitle}}</h3>
+      {{view PanelView content=columnA panel="columnA"}}
+    </div>
+    <div>
+      <h3>{{chosenItemsTitle}}</h3>
+      {{view PanelView content=columnB panel="columnB"}}
+    </div>
+</script>
+
+<script type="text/javascript" src="vendors/jquery.js"></script>
+<script type="text/javascript" src="vendors/handlebars.js"></script>
+<script type="text/javascript" src="vendors/ember.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+
+</body>
+</html>
