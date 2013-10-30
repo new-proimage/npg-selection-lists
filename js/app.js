@@ -81,7 +81,7 @@
           item = targetColumn[index];
       destColumn.pushObject(item);
       targetColumn.removeObject(item);
-      this.sendAction('chosenItemChanged', this.get('chosenItems'), this.get('availableItems'));
+      this.sendAction('chosenItemChanged', this.get('chosenItems'));
     },
 
     /**
