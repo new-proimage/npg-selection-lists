@@ -38,6 +38,9 @@
   position: relative;
   top: 3px;
 }
+.selection-lists div ul li:last-child {
+  margin-bottom: 0;
+}
 .selection-lists div ul .selected {
   background-color: #83b5ff;
   color: white;
