@@ -1,31 +1,45 @@
 .selection-lists {
+  [draggable] {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
   div {
     float: left;
+    font-family: 'Tahoma';
+    width: 200px;
     h3 {
-      font-size: 14px;
-      color: cornflowerblue;
-      font-weight: normal;
+      font-size: 13px;
+      font-weight: bold;
+      margin-left: 10px;
+      margin-bottom: 3px;
     }
     ul {
-      border: 1px solid lightgrey;
-      padding: 5px 0 5px 0;
-      margin: 5px;
-      text-align: center;
-      height: 300px;
-      border-radius: 5px;
-      box-shadow: 0 1px 3px grey;
-      width: 200px;
+      border: 1px solid #d5d8dd;
+      padding: 0;
+      height: 270px;
+      margin-top: 0;
+      overflow-y: auto;
       li {
         list-style-type: none;
-        padding: 2px;
+        font-size: 13px;
+        height: 27px;
+        background-color: #f3f7fb;
+        margin-bottom: 3px;
+        padding-left: 10px;
+        line-height: 23px;
+        img {
+          position: relative;
+          top: 3px;
+        }
       }
       .selected {
-        background-color: cornflowerblue;
+        background-color: #83b5ff;
         color: white;
       }
     }
     &:last-child {
-      margin-left: 10px;
+      margin-left: 25px;
     }
   }
 }
