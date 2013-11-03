@@ -100,7 +100,7 @@
       tagName: 'ul',
 
       dragOver: function (ev) {
-        ev.preventDefault()
+        ev.preventDefault();
       },
       drop: function (ev) {
         var data = ev.dataTransfer.getData("Text").split('.'),
@@ -110,8 +110,8 @@
         if (panelName === data[0]) {
           return false;
         }
-
-        return this.get('controller').swap(data[0], panelName, data[1]);
+        this.get('controller').swap(data[0], panelName, data[1]);
+        return false;
       },
       itemViewClass: Ember.View.extend({
         tagName: 'li',

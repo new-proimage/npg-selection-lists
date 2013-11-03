@@ -1,4 +1,4 @@
-.selection-lists [draggable] {
+.selection-lists {
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
@@ -33,6 +33,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  cursor: pointer;
 }
 .selection-lists div ul li img {
   position: relative;
