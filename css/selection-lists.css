@@ -20,6 +20,7 @@
   height: 270px;
   margin-top: 0;
   overflow-y: auto;
+  background-color: white;
 }
 .selection-lists div ul li {
   list-style-type: none;
@@ -29,6 +30,9 @@
   margin-bottom: 3px;
   padding-left: 10px;
   line-height: 23px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .selection-lists div ul li img {
   position: relative;
