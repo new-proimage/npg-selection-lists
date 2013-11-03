@@ -58,12 +58,9 @@
         availableItems = this.get('availableItems');
 
       return availableItems.filter(function (available) {
-        var isAvailable = columnB.find(function (item) {
+        return !columnB.find(function (item) {
           return JSON.stringify(item) === JSON.stringify(available);
         }, available);
-        if (!isAvailable) {
-          return available;
-        }
       });
 
     }.property('availableItems.@each'),
