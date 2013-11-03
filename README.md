@@ -22,7 +22,7 @@ Set To List component is based on `Ember.Components`, thus it can be instantiate
 Handlebars template:
 
 		<script type="text/x-handlebars">
-			{{set-to-list}}
+			{{selection-lists}}
 		</script>
 
 It also accepts the set of attributes for
@@ -40,7 +40,7 @@ The constructor can accept the following parameters:
 
 Example:
 
-		{{set-to-list
+		{{selection-lists
 	        availableItemsTitle='Column A:'
 	        chosenItemsTitle='Column B'
 	        availableItems=SNB.allItems

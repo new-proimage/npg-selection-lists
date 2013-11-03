@@ -45,11 +45,11 @@
     }
   });
 
-  NPG.SetToListComponent = Ember.Component.extend({
+  NPG.SelectionListsComponent = Ember.Component.extend({
 
     selected: null,
 
-    classNames: ['set-to-list'],
+    classNames: ['selection-lists'],
 
     columnBBinding: 'chosenItems',
 
