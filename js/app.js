@@ -45,11 +45,11 @@
     }
   });
 
-  NPG.SetToListComponent = Ember.Component.extend({
+  NPG.SelectionListsComponent = Ember.Component.extend({
 
     selected: null,
 
-    classNames: ['set-to-list'],
+    classNames: ['selection-lists'],
 
     columnBBinding: 'chosenItems',
 
@@ -58,12 +58,9 @@
         availableItems = this.get('availableItems');
 
       return availableItems.filter(function (available) {
-        var isAvailable = columnB.find(function (item) {
+        return !columnB.find(function (item) {
           return JSON.stringify(item) === JSON.stringify(available);
         }, available);
-        if (!isAvailable) {
-          return available;
-        }
       });
 
     }.property('availableItems.@each'),
@@ -103,7 +100,7 @@
       tagName: 'ul',
 
       dragOver: function (ev) {
-        ev.preventDefault()
+        ev.preventDefault();
       },
       drop: function (ev) {
         var data = ev.dataTransfer.getData("Text").split('.'),
@@ -113,8 +110,8 @@
         if (panelName === data[0]) {
           return false;
         }
-
-        return this.get('controller').swap(data[0], panelName, data[1]);
+        this.get('controller').swap(data[0], panelName, data[1]);
+        return false;
       },
       itemViewClass: Ember.View.extend({
         tagName: 'li',

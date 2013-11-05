@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Set To List Component</title>
-  <link rel="stylesheet" href="css/components.css"/>
+  <title>Selection Lists Component</title>
+  <link rel="stylesheet" href="css/selection-lists.css"/>
 </head>
 <body>
 
 <script type="text/x-handlebars" id="application">
 
-    {{set-to-list
+    {{selection-lists
         availableItemsTitle="Stock"
         chosenItemsTitle="Store"
         availableItems=NPG.allItems
@@ -19,7 +19,7 @@
 
 </script>
 
-<script type="text/x-handlebars" id="components/set-to-list">
+<script type="text/x-handlebars" id="components/selection-lists">
     <div>
       <h3>{{availableItemsTitle}}</h3>
       {{view PanelView content=columnA panel="columnA"}}
