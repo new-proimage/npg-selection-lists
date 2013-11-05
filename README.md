@@ -1,4 +1,4 @@
-# Set To List Component
+# Selection List Component
 
 ## 1. Overview
 Set To List is the component based on [`Ember.Component`](http://emberjs.com). It represents two list
