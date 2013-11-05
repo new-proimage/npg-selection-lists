@@ -1,7 +1,7 @@
-# Selection List Component
+# Selection Lists Component
 
 ## 1. Overview
-Set To List is the component based on [`Ember.Component`](http://emberjs.com). It represents two list
+Selection Lists is the component based on [`Ember.Component`](http://emberjs.com). It represents two list
 with drag'n'drop capabilities from one to another. It accepts to array where the first is the array of
 possible items, the second is the array of the selected items that appear in the second column. However,
 the items of the first column are available items - selected. The members of the array might of any type.
@@ -18,7 +18,7 @@ the items of the first column are available items - selected. The members of the
 * Opera
 
 ## 2. Use
-Set To List component is based on `Ember.Components`, thus it can be instantiated from the
+Selection Lists component is based on `Ember.Components`, thus it can be instantiated from the
 Handlebars template:
 
 		<script type="text/x-handlebars">
