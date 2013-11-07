@@ -45,6 +45,63 @@
     }
   });
 
+  var SelectionMixin = Ember.Mixin.create({
+    init: function () {
+      this.get(this.get('itemClassName')).reopen({
+        classNameBindings: ['isSelected:selected'],
+        isSelected: false,
+        click: function (ev) {
+          ev.stopImmediatePropagation();
+          this.get('parentView').handleSelection(ev, this);
+        }
+      });
+      return this._super();
+    },
+    selected: Ember.A([]),
+    itemClassName: 'itemViewClass',
+    addSelected: function (itemView) {
+      if (this.get('selected').indexOf(itemView) === -1) {
+        itemView.set('isSelected', true);
+        this.get('selected').pushObject(itemView);
+      }
+    },
+    clearSelection: function () {
+      var item;
+      while (this.get('selected.length') !== 0) {
+        item = this.get('selected').popObject();
+        item.set('isSelected', false);
+      }
+    },
+    handleSelection: function (ev, itemView) {
+      // if non of the ctrl, meta, and shift keys
+      // are pressed, clear the selection
+      if (!ev.ctrlKey && !ev.metaKey && !ev.shiftKey) {
+        this.clearSelection();
+      }
+
+      // if selection is performed with shift key
+      // the selected items should be between the last
+      // and currently clicked items
+      if (ev.shiftKey) {
+        var lastSelected = this.get('selected.lastObject'),
+            lastSelectedIndex = this.get('content').indexOf(lastSelected.get('content')),
+            itemViewIndex = this.get('content').indexOf(itemView.get('content')),
+            minIndex = Math.min(lastSelectedIndex, itemViewIndex),
+            maxIndex = Math.max(lastSelectedIndex, itemViewIndex),
+            childViews = this.get('childViews');
+        this.clearSelection();
+        for (var i = minIndex; i <= maxIndex; i += 1) {
+          this.addSelected(childViews[i]);
+        }
+      }
+
+      this.addSelected(itemView);
+    },
+    click: function () {
+      this.clearSelection();
+    }
+  });
+
   NPG.SelectionListsComponent = Ember.Component.extend({
 
     init: function () {
@@ -95,7 +152,7 @@
      * Panel View is the definition of the view that
      * represents left or right columns
      */
-    PanelView: Ember.CollectionView.extend({
+    PanelView: Ember.CollectionView.extend(SelectionMixin, {
       // rewrite template property of itemViewClass in case of
       // rowRender is provided in the component constructor
       init: function () {
@@ -126,22 +183,10 @@
       itemViewClass: Ember.View.extend({
         tagName: 'li',
         defaultTemplate: Ember.Handlebars.compile('{{view.content}}'),
-        classNameBindings: ['isSelected:selected'],
         attributeBindings: ['draggable'],
         draggable: 'true',
-        isSelected: false,
-
-        click: function(event) {
-          var currentSelection = this.get('controller.selected');
-          if (currentSelection) {
-            currentSelection.toggleProperty('isSelected');
-          }
-          this.set('controller.selected', this);
-          this.toggleProperty('isSelected');
-        },
 
         dragStart: function (ev) {
-          this.click();
           var panelName = this.get('parentView.panel'),
             column = this.get('controller.' + panelName),
             index = column.indexOf(this.get('content'));
