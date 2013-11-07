@@ -47,23 +47,33 @@
 
   NPG.SelectionListsComponent = Ember.Component.extend({
 
+    init: function () {
+      var that = this;
+      that.columnB = Ember.ArrayController.create({
+        sortProperties: (that.sortProperties) ? that.sortProperties.split(',') : void 0,
+        sortAscending: true,
+        content: that.get('chosenItems')
+      });
+      that.columnA = Ember.ArrayController.create({
+        sortProperties: (that.sortProperties) ? that.sortProperties.split(',') : void 0,
+        sortAscending: true,
+        content: (function () {
+          var columnB = that.get('columnB'),
+            availableItems = that.get('availableItems');
+
+          return availableItems.filter(function (available) {
+            return !columnB.find(function (item) {
+              return JSON.stringify(item) === JSON.stringify(available);
+            }, available);
+          });
+        })()
+      });
+      return this._super();
+    },
+
     selected: null,
 
     classNames: ['selection-lists'],
-
-    columnBBinding: 'chosenItems',
-
-    columnA: function() {
-      var columnB = this.get('columnB'),
-        availableItems = this.get('availableItems');
-
-      return availableItems.filter(function (available) {
-        return !columnB.find(function (item) {
-          return JSON.stringify(item) === JSON.stringify(available);
-        }, available);
-      });
-
-    }.property('availableItems.@each'),
 
     /**
      * Implements swap of the element from
@@ -75,7 +85,7 @@
     swap: function (target, destination, index) {
       var targetColumn = this.get(target),
           destColumn = this.get(destination),
-          item = targetColumn[index];
+          item = targetColumn.objectAt(index);
       destColumn.pushObject(item);
       targetColumn.removeObject(item);
       this.sendAction('chosenItemChanged', this.get('chosenItems'));
