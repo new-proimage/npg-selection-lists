@@ -31,12 +31,13 @@ component customization which are described the the chapter API.
 ## 3. API
 The constructor can accept the following parameters:
 
-* {string} `availableItemsTitle` Title of the column A
-* {string} `chosenItemsTitle` Title of the column B
-* {array} `availableItems` Array of all possible items
-* {array} `chosenItems` Array of chosen items that appear in column B
-* {string} `chosenItemChanged` Name of the function to be invoked in the hosting controller when swapping occurs
-* {string} `rowRender` Render that is used to the template of list item
+* {string}  `availableItemsTitle`     Title of the column A
+* {string}  `chosenItemsTitle`        Title of the column B
+* {array}   `availableItems`          Array of all possible items
+* {array}   `chosenItems`             Array of chosen items that appear in column B
+* {string}  `chosenItemChanged`       Name of the function to be invoked in the hosting controller when swapping occurs
+* {string}  `sortProperties`          The string with enumerated by comma sorting properties inside the array item
+* {string}  `rowRender`               Render that is used to the template of list item
 
 Example:
 
@@ -46,6 +47,7 @@ Example:
 	        availableItems=SNB.allItems
 	        chosenItems=SNB.selectedItems
 	        chosenItemChanged="chosenItemChanged"
+	        sortProperties="val"
 	        rowRender='<img src="http://icons.iconarchive.com/icons/aha-soft/people/16/engineer-icon.png" /> {{view.content}}'
     }}
 
