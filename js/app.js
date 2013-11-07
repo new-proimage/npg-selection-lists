@@ -100,6 +100,7 @@
     click: function () {
       this.clearSelection();
     }
+
   });
 
   NPG.SelectionListsComponent = Ember.Component.extend({
@@ -165,6 +166,10 @@
         return this._super();
       },
       tagName: 'ul',
+
+      attributeBindings: ['tabIndex'],
+
+      tabIndex: -1,
 
       dragOver: function (ev) {
         ev.preventDefault();

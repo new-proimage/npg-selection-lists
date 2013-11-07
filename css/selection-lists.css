@@ -22,6 +22,12 @@
   overflow-y: auto;
   background-color: white;
 }
+.selection-lists div ul:focus {
+  outline: none;
+}
+.selection-lists div ul::-moz-focus-inner {
+  border: none;
+}
 .selection-lists div ul li {
   list-style-type: none;
   font-size: 13px;

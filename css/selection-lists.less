@@ -19,6 +19,12 @@
       margin-top: 0;
       overflow-y: auto;
       background-color: white;
+      &:focus {
+        outline: none
+      }
+      &::-moz-focus-inner {
+        border: none;
+      }
       li {
         list-style-type: none;
         font-size: 13px;
