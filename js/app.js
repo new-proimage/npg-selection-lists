@@ -55,9 +55,10 @@
           this.get('parentView').handleSelection(ev, this);
         }
       });
+      this.set('selected', Ember.A([]));
       return this._super();
     },
-    selected: Ember.A([]),
+
     itemClassName: 'itemViewClass',
     addSelected: function (itemView) {
       if (this.get('selected').indexOf(itemView) === -1) {
@@ -199,6 +200,7 @@
         draggable: 'true',
 
         dragStart: function (ev) {
+          this.set('isSelected', true);
           var panelName = this.get('parentView.panel'),
             column = this.get('controller.' + panelName),
             index = column.indexOf(this.get('content'));
