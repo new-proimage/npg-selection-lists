@@ -99,6 +99,13 @@
     },
     click: function () {
       this.clearSelection();
+    },
+    keyPress: function (ev) {
+      if (ev.keyCode === 65 && ev.shiftKey) {
+        this.get('childViews').forEach(function (itemView) {
+          this.addSelected(itemView);
+        }, this);
+      }
     }
 
   });
