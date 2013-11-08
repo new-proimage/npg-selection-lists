@@ -6,12 +6,18 @@ with drag'n'drop capabilities from one to another. It accepts to array where the
 possible items, the second is the array of the selected items that appear in the second column. However,
 the items of the first column are available items - selected. The members of the array might of any type.
 
-### 1.1. Dependencies
+### 1.1 Features
+* Drag'n'Drop of multiple items
+* Multiple selection with `ctrl`, `shift` keys
+* Select all with `shift+a`
+* Arrow `up` and `down` navigation
+
+### 1.2. Dependencies
 1. jQuery >= 1.9
 2. Handlebars
 3. EmberJS >= 1.0
 
-### 1.2. Browser support
+### 1.3. Browser support
 * IE 10+
 * Chrome
 * Firefox
