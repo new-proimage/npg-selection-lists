@@ -51,11 +51,12 @@
         classNameBindings: ['isSelected:selected'],
         isSelected: false,
         click: function (ev) {
-          ev.stopImmediatePropagation();
           this.get('parentView').handleSelection(ev, this);
+          return false;
         }
       });
       this.set('selected', Ember.A([]));
+
       return this._super();
     },
 
@@ -137,23 +138,25 @@
       return this._super();
     },
 
-    selected: null,
-
     classNames: ['selection-lists'],
 
     /**
      * Implements swap of the element from
      * column A to column B or vice versa
-     * @param {string} target       Panel name of target
-     * @param {string} destination  Panel name of destination
-     * @param {number} index        Index of element in target panel
+     * @param {string}  target          Panel name of target
+     * @param {string}  destination     Panel name of destination
+     * @param {array}   indexes         Index of element in target panel
      */
-    swap: function (target, destination, index) {
+    swap: function (target, destination, items) {
       var targetColumn = this.get(target),
-          destColumn = this.get(destination),
-          item = targetColumn.objectAt(index);
-      destColumn.pushObject(item);
-      targetColumn.removeObject(item);
+          destColumn = this.get(destination);
+      items.forEach(function (i) {
+        var item = targetColumn.find(function (x) {
+          return JSON.stringify(x) === JSON.stringify(i);
+        });
+        destColumn.pushObject(item);
+        targetColumn.removeObject(item);
+      });
       this.sendAction('chosenItemChanged', this.get('chosenItems'));
     },
 
@@ -179,33 +182,43 @@
 
       tabIndex: -1,
 
+      dragStart: function (ev) {
+        var panelName = this.get('panel'), data;
+        data = {
+          columnName: panelName,
+          items: this.get('selected').map(function (itemView) {
+            return itemView.get('content');
+          })
+        };
+        ev.dataTransfer.setData('Text', JSON.stringify(data));
+      },
+
       dragOver: function (ev) {
         ev.preventDefault();
       },
+
       drop: function (ev) {
-        var data = ev.dataTransfer.getData("Text").split('.'),
+        var data = JSON.parse(ev.dataTransfer.getData("Text")),
           panelName = this.get('panel');
 
         // drop is done over the same panel
-        if (panelName === data[0]) {
+        if (panelName === data.columnName) {
           return false;
         }
-        this.get('controller').swap(data[0], panelName, data[1]);
+        this.get('controller').swap(data.columnName, panelName, data.items);
         return false;
       },
+
       itemViewClass: Ember.View.extend({
         tagName: 'li',
         defaultTemplate: Ember.Handlebars.compile('{{view.content}}'),
         attributeBindings: ['draggable'],
-        draggable: 'true',
-
-        dragStart: function (ev) {
-          this.set('isSelected', true);
-          var panelName = this.get('parentView.panel'),
-            column = this.get('controller.' + panelName),
-            index = column.indexOf(this.get('content'));
-          ev.dataTransfer.setData('Text', panelName + '.' + index);
-        }
+        draggable: 'true'
+  //        dragStart: function (ev) {
+  //          if (this.get('parentView.selected.length') === 0) {
+  //            this.get('parentView').handleSelection(ev, this);
+  //          }
+  //        }
       })
     })
   });
