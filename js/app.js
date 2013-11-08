@@ -75,6 +75,7 @@
       }
     },
     handleSelection: function (ev, itemView) {
+      if (itemView === void 0) { return; }
       // if non of the ctrl, meta, and shift keys
       // are pressed, clear the selection
       if (!ev.ctrlKey && !ev.metaKey && !ev.shiftKey) {
@@ -102,7 +103,20 @@
     click: function () {
       this.clearSelection();
     },
+    keyDown: function (ev) {
+      if (this.get('selected.length') !== 1) { return; }
+      var selectedIndex = this.get('content').indexOf(this.get('selected.firstObject.content'));
+      // up arrow key
+      if (ev.keyCode === 38) {
+        this.handleSelection(ev, this.get('childViews')[selectedIndex - 1]);
+      }
+      // down arrow key
+      if (ev.keyCode === 40) {
+        this.handleSelection(ev, this.get('childViews')[selectedIndex + 1]);
+      }
+    },
     keyPress: function (ev) {
+      // shift key
       if (ev.keyCode === 65 && ev.shiftKey) {
         this.get('childViews').forEach(function (itemView) {
           this.addSelected(itemView);
