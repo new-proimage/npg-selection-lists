@@ -149,6 +149,9 @@
           });
         })()
       });
+      that.mediator = that.Mediator.create({
+        channels: {}
+      });
       return this._super();
     },
 
@@ -159,7 +162,7 @@
      * column A to column B or vice versa
      * @param {string}  target          Panel name of target
      * @param {string}  destination     Panel name of destination
-     * @param {array}   indexes         Index of element in target panel
+     * @param {array}   items           List of element in target panel
      */
     swap: function (target, destination, items) {
       var targetColumn = this.get(target),
@@ -175,6 +178,37 @@
     },
 
     /**
+     * Mediator is the object encapsulating
+     * publish/subscribe mechanism for
+     * exchanging commands between instances of
+     * Panel View.
+     * E.g. when click in one panel view is occurred,
+     * all the rest should clear their selections.
+     */
+    Mediator: Ember.Object.extend({
+      subscribe: function (channelName, subscriber, callback, context) {
+        if (this.channels[channelName] === void 0) {
+          this.channels[channelName] = [];
+        }
+        this.channels[channelName].pushObject({
+          subscriber: subscriber,
+          callback: callback,
+          ctx: context
+        });
+      },
+      publish: function (channelName) {
+        var args = [].slice.call(arguments, 1);
+        this.channels[channelName].forEach(function (item) {
+          return item.callback.apply(item.ctx, args);
+        })
+      },
+      unsubscribe: function (channelName, subscriber) {
+        var obj = this.channels[channelName].findBy('subscriber', subscriber);
+        this.channels[channelName].removeObject(obj);
+      }
+    }),
+
+    /**
      * Panel View is the definition of the view that
      * represents left or right columns
      */
@@ -188,6 +222,11 @@
             template: Ember.Handlebars.compile(rowRender)
           });
         }
+        this.get('controller.mediator').subscribe('clearOtherSelection', this.get('panel'), function (issuer) {
+          if (this.get('panel') !== issuer) {
+            this.clearSelection();
+          }
+        }, this);
         return this._super();
       },
       tagName: 'ul',
@@ -220,6 +259,7 @@
           return false;
         }
         this.get('controller').swap(data.columnName, panelName, data.items);
+        this.get('controller.mediator').publish('clearOtherSelection', this.get('panel'));
         return false;
       },
 
