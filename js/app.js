@@ -52,7 +52,6 @@
         isSelected: false,
         click: function (ev) {
           this.get('parentView').handleSelection(ev, this);
-          return false;
         }
       });
       this.set('selected', Ember.A([]));
@@ -99,9 +98,6 @@
       }
 
       this.addSelected(itemView);
-    },
-    click: function () {
-      this.clearSelection();
     },
     keyDown: function (ev) {
       if (this.get('selected.length') !== 1) { return; }
@@ -262,17 +258,21 @@
         this.get('controller.mediator').publish('clearOtherSelection', this.get('panel'));
         return false;
       },
+      
+      click: function (ev) {
+        this.get('controller.mediator').publish('clearOtherSelection', this.get('panel'));
+      },
 
       itemViewClass: Ember.View.extend({
         tagName: 'li',
         defaultTemplate: Ember.Handlebars.compile('{{view.content}}'),
         attributeBindings: ['draggable'],
-        draggable: 'true'
-  //        dragStart: function (ev) {
-  //          if (this.get('parentView.selected.length') === 0) {
-  //            this.get('parentView').handleSelection(ev, this);
-  //          }
-  //        }
+        draggable: 'true',
+        dragStart: function (ev) {
+          if (this.get('parentView.selected.length') === 0) {
+            this.get('parentView').handleSelection(ev, this);
+          }
+        }
       })
     })
   });
