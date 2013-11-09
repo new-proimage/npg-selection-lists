@@ -6,6 +6,8 @@ with drag'n'drop capabilities from one to another. It accepts to array where the
 possible items, the second is the array of the selected items that appear in the second column. However,
 the items of the first column are available items - selected. The members of the array might of any type.
 
+v0.0.5
+
 ### 1.1 Features
 * Drag'n'Drop of multiple items
 * Multiple selection with `ctrl`, `shift` keys
