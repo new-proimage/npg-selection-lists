@@ -1,3 +1,15 @@
+// variables
+@panelWidth: 200px;
+@panelHeight: 270px;
+@panelBgColor: white;
+@panelBorder: 1px solid #d5d8dd;
+@selectionBgColor: #83b5ff;
+@selectionTextColor: white;
+@itemBgColor: #f3f7fb;
+@itemTextColor: black;
+@itemBorder: 1px solid transparent;
+@itemHoveredBorder: 1px solid #d3d9dd;
+
 .selection-lists {
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -5,7 +17,7 @@
   div {
     float: left;
     font-family: 'Tahoma';
-    width: 200px;
+    width: @panelWidth;
     h3 {
       font-size: 13px;
       font-weight: bold;
@@ -13,12 +25,12 @@
       margin-bottom: 3px;
     }
     ul {
-      border: 1px solid #d5d8dd;
+      border: @panelBorder;
       padding: 0;
-      height: 270px;
+      height: @panelHeight;
       margin-top: 0;
       overflow-y: auto;
-      background-color: white;
+      background-color: @panelBgColor;
       &:focus {
         outline: none
       }
@@ -29,7 +41,8 @@
         list-style-type: none;
         font-size: 13px;
         height: 27px;
-        background-color: #f3f7fb;
+        background-color: @itemBgColor;
+        color: @itemTextColor;
         margin-bottom: 3px;
         padding-left: 10px;
         line-height: 23px;
@@ -37,7 +50,7 @@
         overflow: hidden;
         white-space: nowrap;
         cursor: pointer;
-        border: 1px solid transparent;
+        border: @itemBorder;
         img {
           position: relative;
           top: 3px;
@@ -47,14 +60,14 @@
         }
       }
       .selected {
-        background-color: #83b5ff;
-        color: white;
+        background-color: @selectionBgColor;
+        color: @selectionTextColor;
       }
       .hovered {
-        border-top: 1px solid #d3d9dd;
-        border-bottom: 1px solid #d3d9dd;
+        border-top: @itemHoveredBorder;
+        border-bottom: @itemHoveredBorder;
         &:first-child {
-          border-top: 1px solid transparent;
+          border-top: @itemBorder;
         }
       }
     }

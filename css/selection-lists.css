@@ -20,7 +20,7 @@
   height: 270px;
   margin-top: 0;
   overflow-y: auto;
-  background-color: white;
+  background-color: #ffffff;
 }
 .selection-lists div ul:focus {
   outline: none;
@@ -33,6 +33,7 @@
   font-size: 13px;
   height: 27px;
   background-color: #f3f7fb;
+  color: #000000;
   margin-bottom: 3px;
   padding-left: 10px;
   line-height: 23px;
@@ -51,7 +52,7 @@
 }
 .selection-lists div ul .selected {
   background-color: #83b5ff;
-  color: white;
+  color: #ffffff;
 }
 .selection-lists div ul .hovered {
   border-top: 1px solid #d3d9dd;
