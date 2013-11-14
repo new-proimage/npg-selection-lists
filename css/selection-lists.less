@@ -37,6 +37,7 @@
         overflow: hidden;
         white-space: nowrap;
         cursor: pointer;
+        border: 1px solid transparent;
         img {
           position: relative;
           top: 3px;
@@ -48,6 +49,13 @@
       .selected {
         background-color: #83b5ff;
         color: white;
+      }
+      .hovered {
+        border-top: 1px solid #d3d9dd;
+        border-bottom: 1px solid #d3d9dd;
+        &:first-child {
+          border-top: 1px solid transparent;
+        }
       }
     }
     &:last-child {

@@ -40,6 +40,7 @@
   overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
+  border: 1px solid transparent;
 }
 .selection-lists div ul li img {
   position: relative;
@@ -51,6 +52,13 @@
 .selection-lists div ul .selected {
   background-color: #83b5ff;
   color: white;
+}
+.selection-lists div ul .hovered {
+  border-top: 1px solid #d3d9dd;
+  border-bottom: 1px solid #d3d9dd;
+}
+.selection-lists div ul .hovered:first-child {
+  border-top: 1px solid transparent;
 }
 .selection-lists div:last-child {
   margin-left: 25px;

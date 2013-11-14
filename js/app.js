@@ -223,6 +223,7 @@
             this.clearSelection();
           }
         }, this);
+
         return this._super();
       },
       tagName: 'ul',
@@ -266,8 +267,16 @@
       itemViewClass: Ember.View.extend({
         tagName: 'li',
         defaultTemplate: Ember.Handlebars.compile('{{view.content}}'),
+        classNameBindings: ['isHovered: hovered'],
         attributeBindings: ['draggable'],
         draggable: 'true',
+        isHovered: false,
+        mouseEnter: function () {
+          this.set('isHovered', true)
+        },
+        mouseLeave: function () {
+          this.set('isHovered', false)
+        },
         dragStart: function (ev) {
           if (this.get('parentView.selected.length') === 0) {
             this.get('parentView').handleSelection(ev, this);
