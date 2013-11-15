@@ -60,6 +60,20 @@
     },
 
     itemClassName: 'itemViewClass',
+    childViewsDidChange: function (views, start, removed, added) {
+      var i = 0;
+      /*
+      If the state of the panel is preRender, it means,
+      it's building, then the selection shouldn't be added,
+      as well as when the amount of added items is 0
+       */
+      if (this.state === 'preRender' || added === 0) { return; }
+      while (i !== added) {
+        this.addSelected(views[start + i]);
+        i += 1;
+      }
+      return this._super.apply(this, arguments);
+    },
     addSelected: function (itemView) {
       if (this.get('selected').indexOf(itemView) === -1) {
         itemView.set('isSelected', true);
@@ -241,6 +255,7 @@
           })
         };
         ev.dataTransfer.setData('Text', JSON.stringify(data));
+        this.get('controller.mediator').publish('clearOtherSelection', this.get('panel'));
       },
 
       dragOver: function (ev) {
