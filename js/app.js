@@ -1,40 +1,10 @@
 (function () {
 
   'use strict';
-  window.NPG = Ember.Application.create({
-    allItems: [
-      {
-        index: 1,
-        val: 'apples'
-      },
-      {
-        index: 2,
-        val: 'oranges'
-      },
-      {
-        index: 3,
-        val: 'peaches'
-      },
-      {
-        index: 4,
-        val: 'strawberries'
-      },
-      {
-        index: 5,
-        val: 'plums'
-      }
-    ],
-    chosenItems: [
-      {
-        index: 1,
-        val: 'apples'
-      },
-      {
-        index: 2,
-        val: 'oranges'
-      }
-    ]
-  });
+  var amountOfAllItems = 30,
+      amountOfChosenItems = 5;
+
+  window.NPG = Ember.Application.create({});
 
   // Make override for the sake of hosting controller demonstration
   NPG.ApplicationController = Ember.Controller.extend({
@@ -42,7 +12,21 @@
       chosenItemChanged: function(selected, all) {
         console.log('swapping occurred');
       }
-    }
+    },
+    generateItems: function (amount) {
+      return Array.apply(0, Array(amount)).map(function (x, idx) {
+        return {
+          index: idx,
+          val: String.fromCharCode(65 + idx)
+        }
+      })
+    },
+    allItems: function () {
+      return this.generateItems(amountOfAllItems)
+    }.property(),
+    chosenItems: function () {
+      return this.generateItems(amountOfChosenItems)
+    }.property()
   });
 
   var SelectionMixin = Ember.Mixin.create({
@@ -126,7 +110,7 @@
       }
     },
     keyPress: function (ev) {
-      // shift key
+      // select all
       if (ev.keyCode === 65 && ev.shiftKey) {
         this.get('childViews').forEach(function (itemView) {
           this.addSelected(itemView);
