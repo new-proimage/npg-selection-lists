@@ -98,15 +98,25 @@
       this.addSelected(itemView);
     },
     keyDown: function (ev) {
+      // disable default scrolling strategy of the browser
+      ev.preventDefault();
       if (this.get('selected.length') !== 1) { return; }
       var selectedIndex = this.get('content').indexOf(this.get('selected.firstObject.content'));
       // up arrow key
       if (ev.keyCode === 38) {
-        this.handleSelection(ev, this.get('childViews')[selectedIndex - 1]);
+        this.$()[0].scrollTop -= 23;
+        // animation frame is require to set the selection
+        // smoothly (no setTimeout(fn, 16)) after setting the top scroll position
+        window.requestAnimationFrame(function () {
+          this.handleSelection(ev, this.get('childViews')[selectedIndex - 1]);
+        }.bind(this));
       }
       // down arrow key
       if (ev.keyCode === 40) {
-        this.handleSelection(ev, this.get('childViews')[selectedIndex + 1]);
+        this.$()[0].scrollTop += 23;
+        window.requestAnimationFrame(function () {
+          this.handleSelection(ev, this.get('childViews')[selectedIndex + 1]);
+        }.bind(this));
       }
     },
     keyPress: function (ev) {
