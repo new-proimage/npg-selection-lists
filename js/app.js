@@ -97,34 +97,42 @@
 
       this.addSelected(itemView);
     },
-    keyDown: function (ev) {
-      // disable default scrolling strategy of the browser
-      ev.preventDefault();
+    selectWithArrow: function (ev, direction) {
       if (this.get('selected.length') !== 1) { return; }
       var selectedIndex = this.get('content').indexOf(this.get('selected.firstObject.content'));
-      // up arrow key
-      if (ev.keyCode === 38) {
-        this.$()[0].scrollTop -= 23;
+      if (direction === 'up') {
+        this.$()[0].scrollTop -= 30;
         // animation frame is require to set the selection
         // smoothly (no setTimeout(fn, 16)) after setting the top scroll position
         window.requestAnimationFrame(function () {
           this.handleSelection(ev, this.get('childViews')[selectedIndex - 1]);
         }.bind(this));
       }
-      // down arrow key
-      if (ev.keyCode === 40) {
-        this.$()[0].scrollTop += 23;
+      if (direction === 'down') {
+        this.$()[0].scrollTop += 30;
         window.requestAnimationFrame(function () {
           this.handleSelection(ev, this.get('childViews')[selectedIndex + 1]);
         }.bind(this));
       }
     },
-    keyPress: function (ev) {
-      // select all
-      if (ev.keyCode === 65 && ev.shiftKey) {
-        this.get('childViews').forEach(function (itemView) {
-          this.addSelected(itemView);
-        }, this);
+    selectAll: function () {
+      this.get('childViews').forEach(function (itemView) {
+        this.addSelected(itemView);
+      }, this);
+    },
+    keyDown: function (ev) {
+      // disable default scrolling strategy of the browser
+      ev.preventDefault();
+      switch (ev.keyCode) {
+        // arrow up
+        case 38:
+          return this.selectWithArrow(ev, 'up');
+        // arrow down
+        case 40:
+          return this.selectWithArrow(ev, 'down');
+        // a
+        case 65:
+          if (ev.shiftKey) { return this.selectAll(); }
       }
     }
 
