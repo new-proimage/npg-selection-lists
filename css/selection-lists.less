@@ -9,6 +9,8 @@
 @itemTextColor: black;
 @itemBorder: 1px solid transparent;
 @itemHoveredBorder: 1px solid #d3d9dd;
+@headerTextSize: 13px;
+@regularTextSize: 13px;
 
 .selection-lists {
   -moz-user-select: none;
@@ -19,7 +21,7 @@
     font-family: 'Tahoma';
     width: @panelWidth;
     h3 {
-      font-size: 13px;
+      font-size: @headerTextSize;
       font-weight: bold;
       margin-left: 10px;
       margin-bottom: 3px;
@@ -39,7 +41,7 @@
       }
       li {
         list-style-type: none;
-        font-size: 13px;
+        font-size: @regularTextSize;
         height: 27px;
         background-color: @itemBgColor;
         color: @itemTextColor;
