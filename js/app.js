@@ -308,7 +308,11 @@
           this.set('isHovered', false)
         },
         dragStart: function (ev) {
-          if (this.get('parentView.selected.length') === 0) {
+          var selected = this.get('parentView.selected');
+          if (selected.length === 0) {
+            this.get('parentView').handleSelection(ev, this);
+          }
+          if (selected.length === 1 && !selected.contains(this)) {
             this.get('parentView').handleSelection(ev, this);
           }
         }
