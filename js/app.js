@@ -59,9 +59,15 @@
       return this._super.apply(this, arguments);
     },
     addSelected: function (itemView) {
-      if (this.get('selected').indexOf(itemView) === -1) {
+      if (!this.get('selected').contains(itemView)) {
         itemView.set('isSelected', true);
         this.get('selected').pushObject(itemView);
+      }
+    },
+    removeSelected: function (itemView) {
+      if (this.get('selected').contains(itemView)) {
+        itemView.set('isSelected', false);
+        this.get('selected').removeObject(itemView);
       }
     },
     clearSelection: function () {
@@ -78,6 +84,13 @@
       if (!ev.ctrlKey && !ev.metaKey && !ev.shiftKey) {
         this.clearSelection();
       }
+
+      // deselect the row if ctrl button is pressed
+      // and the item is selected
+      if ((ev.ctrlKey || ev.metaKey) && this.get('selected').contains(itemView)) {
+        return this.removeSelected(itemView);
+      }
+
 
       // if selection is performed with shift key
       // the selected items should be between the last
